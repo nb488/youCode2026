@@ -5,7 +5,7 @@
   }
   
   body {
-    font-family: Arial, sans-serif;
+    font-family: "Palatino Linotype", Palatino, serif;
     background: linear-gradient(135deg, #fdf6f0, #fffaf7);
     color: #2d2d2d;
     min-height: 100vh;
@@ -37,18 +37,21 @@
   }
   
   .logo {
-    font-size: 4rem;
-    font-weight: 800;
-    color: #2d6a4f;
+    font-family: 'Great Vibes', cursive;
+    font-size: 9.5rem;
+    background: linear-gradient(45deg, #61c2e5, #aceac7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
   }
   
   .tagline {
     font-size: 1.2rem;
-    color: #555;
+    color: #5c6474;
     max-width: 600px;
     margin: 0 auto 2rem auto;
     line-height: 1.6;
+    margin-bottom: 3rem;
   }
   
   .button-group {
@@ -62,8 +65,8 @@
     text-decoration: none;
     padding: 1rem 2rem;
     border-radius: 14px;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 550;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   
@@ -73,12 +76,12 @@
   }
   
   .btn-primary {
-    background-color: #2d6a4f;
+    background-color: #91d7b0;
     color: white;
   }
   
   .btn-secondary {
-    background-color: #f4a261;
+    background-color: #77c6e3;
     color: white;
   }
   

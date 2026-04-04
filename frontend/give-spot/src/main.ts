@@ -10,8 +10,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </p>
 
         <div class="button-group">
-          <a href="#" class="btn btn-primary">Find GiveSpot</a>
-          <a href="#" class="btn btn-secondary">Create GiveSpot</a>
+          <a href="#" class="btn btn-primary">Find a GiveSpot</a>
+          <a href="#" class="btn btn-secondary">Create a GiveSpot</a>
         </div>
 
         <p class="subtext">
