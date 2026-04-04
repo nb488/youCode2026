@@ -31,3 +31,5 @@ function renderPage() {
 
 window.addEventListener('hashchange', renderPage)
 window.addEventListener('load', renderPage)
+
+renderPage()
