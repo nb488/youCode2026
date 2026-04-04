@@ -105,3 +105,110 @@
       max-width: 280px;
     }
   }
+
+  .content-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+  
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .nav-logo {
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #2d6a4f;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .page-header {
+    margin-bottom: 2rem;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .page-header p {
+    color: #666;
+  }
+  
+  .filter-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .search-input,
+  .filter-select,
+  .create-form input,
+  .create-form textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 1rem;
+  }
+  
+  .filter-select {
+    max-width: 200px;
+  }
+  
+  .popup-list {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .popup-card {
+    border: 1px solid #eee;
+    border-radius: 18px;
+    padding: 1.25rem;
+    background: #fffaf7;
+  }
+  
+  .popup-card h3 {
+    margin-bottom: 0.75rem;
+  }
+  
+  .popup-card p {
+    margin-bottom: 0.5rem;
+    color: #444;
+  }
+  
+  .create-form {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .create-form label {
+    display: grid;
+    gap: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .create-form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
