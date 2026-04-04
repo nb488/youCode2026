@@ -6,39 +6,38 @@ DROP TABLE IF EXISTS Volunteer;
 DROP TABLE IF EXISTS Organizer;
 
 -- Volunteers
-CREATE TABLE Volunteer (
-    volunteer_id INT PRIMARY KEY,
+CREATE TABLE Member (
+    member_id INT PRIMARY KEY,
+    type VARCHAR(20) NOT NULL, -- 'organizer' or 'volunteer'
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
     phone_number VARCHAR(20)
-);
-
--- Organizers
-CREATE TABLE Organizer (
-    organizer_id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
 );
 
 -- Centers / PopUps
 CREATE TABLE PopUp (
     center_id SERIAL PRIMARY KEY,
     postal_code CHAR(6) NOT NULL,
+    street_address VARCHAR(100) NOT NULL,
     province VARCHAR(50) NOT NULL,
     city VARCHAR(50) NOT NULL,
+    latitude DECIMAL(9,6) NOT NULL,
+    longitude DECIMAL(9,6) NOT NULL,
     time_start TIMESTAMP NOT NULL,
     time_end TIMESTAMP NOT NULL,
     description VARCHAR(200) NOT NULL,
-    organizer_id INT NOT NULL REFERENCES Organizer(organizer_id)
+    member_id INT NOT NULL REFERENCES Member(member_id) -- enforce organizer role at application level
 );
 
 -- Many-to-many relationship: PopUps <-> Volunteers
-CREATE TABLE CenterVolunteer (
+CREATE TABLE PopUpVolunteer (
     center_id INT NOT NULL REFERENCES PopUp(center_id),
-    volunteer_id INT NOT NULL REFERENCES Volunteer(volunteer_id),
-    PRIMARY KEY (center_id, volunteer_id)
+    member_id INT NOT NULL REFERENCES Member(member_id),
+    PRIMARY KEY (center_id, member_id)
 );
 
--- Resources (one-to-many: PopUp -> Resource)
+-- Resources (one-to-many: PopUp -> Resource) 
+-- Note this specifies the resources that the PopUp is collecting 
 CREATE TABLE Resource (
     resource_id SERIAL PRIMARY KEY,
     center_id INT NOT NULL REFERENCES PopUp(center_id),
