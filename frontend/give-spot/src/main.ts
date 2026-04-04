@@ -1,23 +1,33 @@
 import './style.css'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div class="page">
-    <header class="hero">
-      <div class="hero-content">
-        <h1 class="logo">GiveSpot</h1>
-        <p class="tagline">
-          Making local donation drives easier to find, host, and support.
-        </p>
+import { renderHomePage } from './pages/home'
+import { renderFindPage } from './pages/find'
+import { renderCreatePage } from './pages/create'
 
-        <div class="button-group">
-          <a href="#" class="btn btn-primary">Find GiveSpot</a>
-          <a href="#" class="btn btn-secondary">Create GiveSpot</a>
-        </div>
+function renderPage() {
 
-        <p class="subtext">
-          Donate nearby or organize a local drive for nonprofits in need.
-        </p>
-      </div>
-    </header>
-  </div>
-`
+  const app = document.querySelector<HTMLDivElement>('#app')
+
+  if (!app) return
+
+  const hash = window.location.hash || '#home'
+
+  switch (hash) {
+
+    case '#find':
+      app.innerHTML = renderFindPage()
+      break
+
+    case '#create':
+      app.innerHTML = renderCreatePage()
+      break
+
+    case '#home':
+    default:
+      app.innerHTML = renderHomePage()
+      break
+  }
+}
+
+window.addEventListener('hashchange', renderPage)
+window.addEventListener('load', renderPage)
