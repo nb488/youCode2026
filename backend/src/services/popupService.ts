@@ -32,6 +32,7 @@ interface CreatePopUpData {
 
 export async function createPopUpService(data: CreatePopUpData) {
     const organizer = await getOrganizer(data.organizer_id);
+    console.log('organizer:', organizer);
     if (!organizer) throw new Error('Organizer not found');
     if (organizer.popup_id) throw new Error('You already have a popup. Please delete it before creating a new one');
 

@@ -43,15 +43,17 @@ function section(title: string) {
     console.log(`${'─'.repeat(60)}`);
 }
 
+// const email = "eva2@example.com"
 // ─── Organizer Tests ─────────────────────────────────────────────────────────
 
 async function testCreateOrganizer() {
     section('POST /organizers');
+    const uniqueEmail = `evan_${Date.now()}_${Math.random().toString(36).slice(2)}@example.com`;
 
     // ✅ success
     const { status, data } = await request('POST', '/organizers', {
         name: 'Evan Thompson',
-        email: 'evan9@example.com',
+        email: uniqueEmail,
         phone_number: '555-7890',
         password: 'password123',
     });
@@ -65,10 +67,10 @@ async function testCreateOrganizer() {
     const r2 = await request('POST', '/organizers', { name: 'Test' });
     expect('400 on missing fields', r2.status, 400, r2.data);
 
-    // ❌ duplicate email
+    // ❌ duplicate email — reuse exact same email
     const r3 = await request('POST', '/organizers', {
         name: 'Evan Thompson',
-        email: 'evan9@example.com',
+        email: uniqueEmail,  // same variable, guaranteed duplicate
         password: 'password123',
     });
     expect('400 on duplicate email', r3.status, 400, r3.data);
@@ -79,8 +81,8 @@ async function testLoginOrganizer() {
 
     // ✅ success
     const { status, data } = await request('POST', '/organizers/login', {
-        email: 'evelyn@example.com',
-        password: 'password123',
+        email: 'lia@example.com',
+        password: '123',
     });
     expect('200 on valid login', status, 200, data);
 

@@ -20,7 +20,7 @@ export const getOrganizer = async (vid: number) => {
 
 export const loginOrganizer = async (email: string, pass: string) => {
     if (!email || !pass) { throw new Error("Email and password are required")}
-
+    console.log('email:', email, 'password:', pass); // ← add this
     const organizer = await repo.getOrganizerByEmail(email);
     if (!organizer) { throw new Error("Organizer not found") }
     if (organizer.password !== pass) { throw new Error("Invalid password")}

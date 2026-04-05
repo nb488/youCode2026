@@ -24,6 +24,7 @@ export const getPopUpsByOrganizer = async (req: Request, res: Response) => {
 export const createOrganizer = async (req: Request, res: Response) => {
   try {
     const result = await service.createOrganizer(req.body);
+    console.log('Created organizer:', result); // ← add this
     res.status(201).json(result as Organizer);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
