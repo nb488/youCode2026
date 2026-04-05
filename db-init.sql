@@ -61,30 +61,65 @@ CREATE TABLE Resource (
 -- Sample Data
 
 INSERT INTO Organizer (organizer_id, name, email, phone_number, password) VALUES
-(1, 'Grace Organizer', 'grace@example.com', '555-0001', 'hashed_password_org_1'),
-(2, 'Henry Organizer', 'henry@example.com', '555-0002', 'hashed_password_org_2');
+(1, 'Grace L', 'gracel@example.com', '555-0001', '123'),
+(2, 'Henry', 'henry@example.com', '555-0002', '123');
+(3, 'Lila', 'lila@example.com', '555-0003', '123'),
+(4, 'Jacob', 'jacob@example.com', '555-0004', '123'),
+(5, 'Mike', 'mike@example.com', '555-0005', '123'),
+(6, 'Marcus', 'marcus@example.com', '555-0006', '123'),
+(7, 'Jade', 'jade@example.com', '555-0007', '123'),
+(8, 'Lia', 'lia@example.com', '555-0008', '123'),
+(9, 'Grace P', 'gracep@example.com', '555-0009', '123'),
+(10, 'Kevin', 'kevin@example.com', '555-0011', '123'),
 
 INSERT INTO Volunteer (volunteer_id, name, email, phone_number) VALUES
-(1, 'Alice Johnson',   'alice.johnson@example.com',   '555-1234'),
-(2, 'Bob Smith',       'bob.smith@example.com',       '555-5678'),
-(3, 'Charlie Lee',     'charlie.lee@example.com',     '555-9012'),
-(4, 'Dana Kim',        'dana.kim@example.com',        '555-3456'),
-(5, 'Evelyn Thompson', 'evelyn.thompson@example.com', NULL),
-(6, 'Franklin Rivera', 'franklin.rivera@example.com', NULL);
+(1, 'Alice Johnson',   'alice12.johnson@example.com',   '555-1234'),
+(2, 'Bob Smith',       'bob134.smith@example.com',       '555-5678'),
+(3, 'Charlie Lee',     'charlie13.lee@example.com',     '555-9012'),
+(4, 'Dana Kim',        'dana34.kim@example.com',        '555-3456'),
+(5, 'Evelyn Thompson', 'evelyn234.thompson@example.com', NULL),
+(6, 'Franklin Rivera', 'franklin46.rivera@example.com', NULL);
+(7, 'Alec Johnson',   'alice87.johnson@example.com',   '555-1234'),
+(8, 'Bob Smith',       'bob467.smith@example.com',       '555-5678'),
+(9, 'Charlie Lee',     'charlie87.lee@example.com',     '555-9012'),
+(10, 'Dana Kim',        'dana26.kim@example.com',        '555-3456'),
+(11, 'Evelyn Thompson', 'evelyn145.thompson@example.com', NULL),
+(12, 'Franklin Rivera', 'franklin8743.rivera@example.com', NULL);
 
 INSERT INTO PopUp (name, postal_code, street_address, province, city, latitude, longitude, time_start, time_end, description, volunteers_needed, organizer_id) VALUES
-('Downtown Donation Hub',    'V5K0A1', '123 Main St',  'British Columbia', 'Vancouver', 49.282729, -123.120738, '2026-04-05 09:00:00', '2026-04-05 17:00:00', 'Downtown donation hub',    10, 1),
-('Eastside Community Drive', 'V6B1C2', '456 East Ave', 'British Columbia', 'Vancouver', 49.274174, -123.098530, '2026-04-06 10:00:00', '2026-04-06 18:00:00', 'Eastside community center', 8, 2);
+('Downtown Donation Hub',    'V5K0A1', '123 Main St',  'British Columbia', 'Vancouver', 49.282729, -123.120738, '2026-04-05 09:00:00', '2026-04-05 17:00:00', 'Donation Pop up',    10, 1),
+('Eastside Community Drive', 'V6B1C2', '456 East Ave', 'British Columbia', 'Vancouver', 49.274174, -123.098530, '2026-04-06 10:00:00', '2026-04-06 18:00:00', 'Donation Pop up', 8, 2),
+('Toys Donation Pop up',    'V5K0A1', '123 Main St',  'British Columbia', 'Vancouver', 49.2435, 122.9712, '2026-04-05 09:00:00', '2026-04-05 17:00:00', 'Donation Pop up',    10, 3),
+('Clothes Donation Pop up', 'V6B1C2', '456 East Ave', 'British Columbia', 'Vancouver', 49.1672, 123.1336, '2026-04-06 10:00:00', '2026-04-06 18:00:00', 'Donation Pop up', 8, 4),
+('Shoes Donation Pop up',    'V5K0A1', '123 Main St',  'British Columbia', 'Vancouver', 49.1910, 122.8490, '2026-04-05 09:00:00', '2026-04-05 17:00:00', 'Donation Pop up',    10, 5),
+('Coquitlam Community Drive', 'V6B1C2', '456 East Ave', 'British Columbia', 'Vancouver', 49.3195, 123.0726, '2026-04-06 10:00:00', '2026-04-06 18:00:00', 'Donation Pop up', 8, 6),
+('Downtown Donation Center',    'V5K0A1', '123 Main St',  'British Columbia', 'Vancouver', 49.3400, 123.1500, '2026-04-05 09:00:00', '2026-04-05 17:00:00', 'Donation Pop up',    10, 7),
+('Donation Hub 12 Ave', 'V6B1C2', '456 East Ave', 'British Columbia', 'Vancouver', 49.2985, 122.7937, '2026-04-06 10:00:00', '2026-04-06 18:00:00', 'Donation Pop up', 8, 8);
+('Clothes Donation Pop up',    'V5K0A1', '123 Main St',  'British Columbia', 'Vancouver', 49.2606, 123.2460, '2026-04-05 09:00:00', '2026-04-05 17:00:00', 'Donation Pop up',    10, 9),
+('Eastside Community Drive', 'V6B1C2', '456 East Ave', 'British Columbia', 'Vancouver', 49.3429, 123.1145, '2026-04-06 10:00:00', '2026-04-06 18:00:00', 'Donation Pop up', 8, 10);
+
 
 -- Link organizers to their pop-ups
 UPDATE Organizer SET popup_id = 1 WHERE organizer_id = 1;
 UPDATE Organizer SET popup_id = 2 WHERE organizer_id = 2;
+UPDATE Organizer SET popup_id = 3 WHERE organizer_id = 3;
+UPDATE Organizer SET popup_id = 4 WHERE organizer_id = 4;
+UPDATE Organizer SET popup_id = 5 WHERE organizer_id = 5;
+UPDATE Organizer SET popup_id = 6 WHERE organizer_id = 6;
+UPDATE Organizer SET popup_id = 7 WHERE organizer_id = 7;
+UPDATE Organizer SET popup_id = 8 WHERE organizer_id = 8;
+UPDATE Organizer SET popup_id = 9 WHERE organizer_id = 9;
+UPDATE Organizer SET popup_id = 10 WHERE organizer_id = 10;
 
 INSERT INTO PopUpVolunteer (popup_id, volunteer_id) VALUES
 (1, 1),
 (1, 2),
 (2, 3),
-(2, 4);
+(2, 4),
+(3, 11),
+(4, 8),
+(5, 9),
+(6, 10);
 
 INSERT INTO Resource (popup_id, name, type) VALUES
 (1, 'Canned Food',    'Food'),
