@@ -53,7 +53,6 @@ function renderPage() {
     case '#login':
       app.innerHTML = renderLoginPage()
       attachLoginPageEvents()
-      handleLoginForm()
       break
 
     case '#signup':
@@ -123,23 +122,6 @@ function renderPage() {
       app.innerHTML = renderHomePage()
       break
   }
-}
-
-function handleLoginForm() {
-    const form = document.querySelector<HTMLFormElement>('.login-form')
-    if (!form) return
-  
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      const formData = new FormData(form)
-      const email = formData.get('email') as string
-      const password = formData.get('password') as string
-  
-      console.log('Login attempt:', { email, password })
-  
-      isLoggedIn = true
-      window.location.hash = '#edit-create'
-    })
 }
 
 function handleSignupForm() {
