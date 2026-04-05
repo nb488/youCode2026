@@ -228,6 +228,77 @@
     gap: 1.5rem;
     align-items: start;
   }
+
+  .login-signup-card {
+    background-color: white;
+    max-width: 400px;
+    margin: 4rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vertical-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .full-width-btn {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .login-card {
+    background: white;
+    max-width: 400px;
+    margin: 4rem auto; /* vertical spacing from top */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+  
+  .login-card label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  
+  .login-card input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.4rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+
+  .signup-card {
+    background: white;
+    max-width: 400px;
+    margin: 4rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+  
+  .signup-card label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  
+  .signup-card input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.4rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
   
   .map-panel {
     width: 100%;

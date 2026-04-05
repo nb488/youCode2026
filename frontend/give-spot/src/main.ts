@@ -11,7 +11,11 @@ import { renderReviewPage } from './pages/review'
 import { mockPopups } from './data/mockPopups'
 import { initializeMap } from './components/mapView'
 import type { CreateFormData } from './types'
+import { renderLoginSignupPage } from './pages/login_signup'
+import { renderLoginPage } from './pages/login'
+import { renderSignupPage } from './pages/signup'
 
+let isLoggedIn = false;
 let createFormData: CreateFormData | null = null;
 let isEditing = false;
 
@@ -40,12 +44,41 @@ function renderPage() {
     case '#find':
       app.innerHTML = renderFindPage()
       initializeMap(mockPopups)
-      attachFindPageEvents()
+      break
+
+    case '#login':
+      app.innerHTML = renderLoginPage()
+      handleLoginForm()
+      break
+
+    case '#signup':
+      app.innerHTML = renderSignupPage()
+      handleSignupForm()
       break
 
     case '#create':
-        app.innerHTML = renderCreatePage()
-        break
+    if (!isLoggedIn) {
+      app.innerHTML = renderLoginSignupPage();
+
+      const loginBtn = document.querySelector<HTMLAnchorElement>('.btn-primary');
+      const signupBtn = document.querySelector<HTMLAnchorElement>('.btn-secondary');
+
+      loginBtn?.addEventListener('click', () => {
+      isLoggedIn = true;
+      window.location.hash = '#create'; 
+      });
+
+      signupBtn?.addEventListener('click', () => {
+      isLoggedIn = true;
+      window.location.hash = '#create';
+      });
+
+      return;
+    }
+      if (!isEditing) createFormData = null;
+      app.innerHTML = renderCreatePage(createFormData ?? undefined);
+      handleCreateForm();
+      break
 
     case '#review':
       if (!createFormData) {
@@ -75,6 +108,39 @@ function renderPage() {
       app.innerHTML = renderHomePage()
       break
   }
+}
+
+function handleLoginForm() {
+    const form = document.querySelector<HTMLFormElement>('.login-form')
+    if (!form) return
+  
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const formData = new FormData(form)
+      const email = formData.get('email') as string
+      const password = formData.get('password') as string
+  
+      console.log('Login attempt:', { email, password })
+  
+      window.location.hash = '#create'
+    })
+}
+
+function handleSignupForm() {
+    const form = document.querySelector<HTMLFormElement>('.signup-form')
+    if (!form) return
+  
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+  
+      const formData = new FormData(form)
+      const email = formData.get('email') as string
+      const password = formData.get('password') as string
+  
+      console.log('Signup successful:', { email, password })
+  
+      window.location.hash = '#login-signup'
+    })
 }
 
 function handleCreateForm() {
