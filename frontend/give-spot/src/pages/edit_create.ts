@@ -9,7 +9,7 @@ export function renderEditCreatePage(): string {
           </nav>
   
           <div class="button-group vertical-buttons">
-            <a href="#create" class="btn btn-primary full-width-btn">Edit/Delete GiveSpot</a>
+            <a href="#no-stored-givespot" class="btn btn-primary full-width-btn">Edit/Delete GiveSpot</a>
             <a href="#create" class="btn btn-secondary full-width-btn">Create New GiveSpot</a>
           </div>
         </div>

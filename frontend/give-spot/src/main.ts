@@ -15,6 +15,7 @@ import { renderLoginSignupPage } from './pages/login_signup'
 import { renderLoginPage } from './pages/login'
 import { renderSignupPage } from './pages/signup'
 import { renderEditCreatePage } from './pages/edit_create'
+import { renderNoStoredGiveSpotPage } from './pages/no_stored_givespot'
 
 let isLoggedIn = false;
 let createFormData: CreateFormData | null = null;
@@ -77,6 +78,10 @@ function renderPage() {
       signupBtn?.addEventListener('click', () => {
         window.location.hash = '#signup';
       });
+      break;
+
+    case '#no-stored-givespot':
+      app.innerHTML = renderNoStoredGiveSpotPage();
       break;
 
     case '#create':
