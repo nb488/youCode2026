@@ -424,3 +424,13 @@
     justify-content: center;
     margin-top: 2rem;
   }
+
+  .error-card {
+    background: #fff3f3;
+    border: 1px solid #f0caca;
+    border-radius: 18px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #a33a3a;
+  }

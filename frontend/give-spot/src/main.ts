@@ -12,7 +12,7 @@ import { mockPopups } from './data/mockPopups'
 import { initializeMap } from './components/mapView'
 import type { CreateFormData } from './types'
 import { renderLoginSignupPage } from './pages/login_signup'
-import { renderLoginPage } from './pages/login'
+import { renderLoginPage , attachLoginPageEvents } from './pages/login'
 import { renderSignupPage } from './pages/signup'
 import { renderEditCreatePage } from './pages/edit_create'
 import { renderNoStoredGiveSpotPage } from './pages/no_stored_givespot'
@@ -52,6 +52,7 @@ function renderPage() {
 
     case '#login':
       app.innerHTML = renderLoginPage()
+      attachLoginPageEvents()
       handleLoginForm()
       break
 
