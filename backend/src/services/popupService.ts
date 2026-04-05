@@ -2,15 +2,17 @@ import { findAllPopUps, findPopUpById, createPopUp, updatePopUp, deletePopUp } f
 import { getCoordinates } from "../utils/geolocation";
 import { addResourceToPopUp, deleteResourcesByPopUpId } from "../models/resourceModel";
 
-export function findPopUpsService(city?: string, resource_type?: string) {
+export async function findPopUpsService(city?: string, resource_type?: string) {
     const query: { city?: string; resource_type?: string } = {};
     if (city) query.city = city;
     if (resource_type) query.resource_type = resource_type;
-    return findAllPopUps(query);
+    return await findAllPopUps(query);
 }
 
-export function findPopUpByIdService(id: number) {
-    return findPopUpById(id);
+export async function findPopUpByIdService(id: number) {
+    const result = await findPopUpById(id);
+    if (!result) throw new Error('Pop-up not found');
+    return result;
 }
 
 interface CreatePopUpData {
@@ -22,6 +24,7 @@ interface CreatePopUpData {
     postal_code: string;
     time_start: string;
     time_end: string;
+    volunteers_needed: number;
     organizer_id: number;
     resources: { name: string; type: number }[];
 }
@@ -60,5 +63,6 @@ export async function updatePopUpService(id: number, data: CreatePopUpData) {
 export async function deletePopUpService(id: number) {
     // delete resources first due to foreign key constraint
     await deleteResourcesByPopUpId(id);
-    return await deletePopUp(id);
+    const result = await deletePopUp(id);
+    if (result === 0) throw new Error('Pop-up not found');
 }

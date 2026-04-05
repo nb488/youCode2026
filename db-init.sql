@@ -37,6 +37,7 @@ CREATE TABLE PopUp (
     time_start TIMESTAMP NOT NULL,
     time_end TIMESTAMP NOT NULL,
     description VARCHAR(200) NOT NULL,
+    volunteers_needed INT NOT NULL,
     organizer_id INT NOT NULL REFERENCES Organizer(organizer_id),
     CHECK (time_end > time_start)
 );

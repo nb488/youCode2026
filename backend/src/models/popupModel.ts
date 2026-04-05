@@ -15,6 +15,7 @@ interface PopupData {
     postal_code: string;
     latitude: number;
     longitude: number;
+    volunteers_needed: number;
     time_start: string;
     time_end: string;
     organizer_id: number;
@@ -115,5 +116,7 @@ export const updatePopUp = async (id: number, data: PopupData) => {
 };
 
 export const deletePopUp = async (id: number) => {
-    await pool.query('DELETE FROM PopUp WHERE popup_id = $1', [id]);
+    const result = await pool.query('DELETE FROM PopUp WHERE popup_id = $1', [id]);
+    return result.rowCount;
 };
+
