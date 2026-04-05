@@ -9,7 +9,6 @@ import { renderDetailsPage } from './pages/details'
 import { renderVolunteerPage, attachVolunteerPageEvents } from './pages/volunteer'
 import { renderConfirmationPage } from './pages/confirmation'
 import { renderReviewPage } from './pages/review'
-import { mockPopups } from './data/mockPopups'
 import { initializeMap } from './components/mapView'
 import type { CreateFormData } from './types'
 import { renderLoginSignupPage } from './pages/login_signup'
@@ -47,10 +46,9 @@ function renderPage() {
   switch (hash) {
 
     case '#find':
-      app.innerHTML = renderFindPage()
-      initializeMap(mockPopups)
-      attachFindPageEvents()
-      break
+        app.innerHTML = renderFindPage()
+        attachFindPageEvents()
+        break
 
     case '#login':
       app.innerHTML = renderLoginPage()
@@ -161,8 +159,8 @@ function renderPage() {
             city: city || 'Vancouver',
             province: province || 'British Columbia',
             postal_code: postal_code || 'V5K0A1',
-            time_start: `${createFormData.date}T${createFormData.time}:00`,
-            time_end: `${createFormData.date}T${createFormData.time}:00`,
+            time_start: `${createFormData.date}T${createFormData.startTime}:00`,
+            time_end: `${createFormData.date}T${createFormData.endTime}:00`,
             volunteers_needed: Number(createFormData.volunteers) || 0,
             organizer_id: organizer.organizer_id,
             resources,
@@ -226,7 +224,8 @@ function handleCreateForm() {
         phone: formData.get('phone') as string || '',
         location: formData.get('location') as string || '',
         date: formData.get('date') as string || '',
-        time: formData.get('time') as string || '',
+        startTime: formData.get('startTime') as string || '',
+        endTime: formData.get('endTime') as string || '',
         items: formData.get('items') as string || '',
         volunteers: formData.get('volunteers') as string || '',
         description: formData.get('description') as string || '',

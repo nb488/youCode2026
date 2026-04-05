@@ -42,10 +42,15 @@ export function renderCreatePage(data?: CreateFormData): string {
               Date
               <input type="date" name="date" value="${data?.date || ''}" />
             </label>
-  
+
             <label>
-              Time
-              <input type="time" name="time" value="${data?.time || ''}" />
+            Start Time
+            <input type="time" name="startTime" required />
+            </label>
+
+            <label>
+            End Time
+            <input type="time" name="endTime" required />
             </label>
   
             <label>

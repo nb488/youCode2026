@@ -1,5 +1,5 @@
 import L from 'leaflet'
-import type { Popup } from '../data/mockPopups'
+import type { Popup } from '../../../../backend/src/types/popup.ts'
 
 let map: L.Map | null = null
 
@@ -26,11 +26,11 @@ export function initializeMap(popups: Popup[]) {
     marker.bindPopup(`
       <strong>${popup.description}</strong><br />
       ${popup.street_address}, ${popup.city}<br />
-      Volunteers: ${popup.volunteer_count}
+      Volunteers: ${popup.volunteers?.length || 0}
     `)
 
     marker.on('click', () => {
-      const card = document.getElementById(`popup-card-${popup.center_id}`)
+      const card = document.getElementById(`popup-card-${popup.popup_id}`)
       if (card) {
         card.scrollIntoView({ behavior: 'smooth', block: 'center' })
         card.classList.add('highlight-card')

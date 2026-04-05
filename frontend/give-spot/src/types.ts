@@ -4,7 +4,8 @@ export interface CreateFormData {
     phone: string
     location: string
     date: string
-    time: string
+    startTime: string
+    endTime: string
     items: string
     volunteers: string
     description: string
