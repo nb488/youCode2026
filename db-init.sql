@@ -27,6 +27,7 @@ CREATE TABLE Volunteer (
 -- Centers / PopUps
 CREATE TABLE PopUp (
     popup_id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
     postal_code CHAR(6) NOT NULL,
     street_address VARCHAR(100) NOT NULL,
     province VARCHAR(50) NOT NULL,
@@ -36,13 +37,14 @@ CREATE TABLE PopUp (
     time_start TIMESTAMP NOT NULL,
     time_end TIMESTAMP NOT NULL,
     description VARCHAR(200) NOT NULL,
+    volunteers_needed INT NOT NULL,
     organizer_id INT NOT NULL REFERENCES Organizer(organizer_id),
     CHECK (time_end > time_start)
 );
 
 -- Many-to-many relationship: PopUps <-> Volunteers
 CREATE TABLE PopUpVolunteer (
-    popup_id INT NOT NULL REFERENCES PopUp(popup_id),
+    popup_id INT NOT NULL REFERENCES PopUp(popup_id) ON DELETE CASCADE,
     volunteer_id INT NOT NULL REFERENCES Volunteer(volunteer_id),
     PRIMARY KEY (popup_id, volunteer_id)
 );
@@ -51,7 +53,7 @@ CREATE TABLE PopUpVolunteer (
 -- Note this specifies the resources that the PopUp is collecting 
 CREATE TABLE Resource (
     resource_id SERIAL PRIMARY KEY,
-    popup_id INT NOT NULL REFERENCES PopUp(popup_id),
+    popup_id INT NOT NULL REFERENCES PopUp(popup_id) ON DELETE CASCADE,
     name VARCHAR(50) NOT NULL,
     type VARCHAR(50) NOT NULL
 );

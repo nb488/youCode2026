@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import organizerRoutes from "./routes/organizerRoutes";
+import popupRoutes from "./routes/popupRoutes";
 
 // import userRoutes from "./routes/userRoutes";
 // import popupRoutes from "./routes/popupRoutes";
@@ -14,9 +15,6 @@ app.use(express.json());
 
 
 app.use("/api/organizers", organizerRoutes);
-
-// app.use("/api/users", userRoutes);
-// app.use("/api/popups", popupRoutes);
-// app.use("/api/resources", resourceRoutes);
+app.use("/api/popups", popupRoutes);
 
 export default app;
