@@ -56,5 +56,25 @@ export interface Resource {
         { name: "First Aid Kits", type: "Medical Supplies" }
       ],
       volunteer_count: 4
-    }
+    },
+
+    {
+        center_id: 3,
+        postal_code: "V5H2A1",
+        street_address: "789 Kingsway",
+        province: "British Columbia",
+        city: "Burnaby",
+        latitude: 49.2488,
+        longitude: -122.9805,
+        time_start: "2026-04-07T11:00:00.000Z",
+        time_end: "2026-04-07T15:00:00.000Z",
+        description: "Burnaby winter essentials drive",
+        member_id: 3,
+        resources: [
+          { name: "Socks", type: "Clothing" }
+        ],
+        volunteer_count: 1
+      }
+
+    
   ]

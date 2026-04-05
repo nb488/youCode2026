@@ -1,4 +1,6 @@
-export function renderCreatePage(): string {
+import type { CreateFormData } from '../types'
+
+export function renderCreatePage(data?: CreateFormData): string {
     return `
       <div class="page">
         <div class="content-container">
@@ -18,42 +20,47 @@ export function renderCreatePage(): string {
           <form class="create-form">
             <label>
               Organizer Name
-              <input type="text" placeholder="Enter your name" />
+              <input type="text" name="organizer" placeholder="Enter your name" value="${data?.organizer || ''}" />
             </label>
   
             <label>
-              Contact Info
-              <input type="text" placeholder="Email or phone number" />
+              Email
+              <input type="text"name="email" placeholder="Email" value="${data?.email || ''}" />
+            </label>
+
+            <label>
+              Phone Number (Optional)
+              <input type="text" name="phone" placeholder="Phone number (optional)" value="${data?.phone || ''}" />
             </label>
   
             <label>
               Location
-              <input type="text" placeholder="Enter address or neighborhood" />
+              <input type="text" name="location" placeholder="Enter address or neighborhood" value="${data?.location || ''}" />
             </label>
   
             <label>
               Date
-              <input type="date" />
+              <input type="date" name="date" value="${data?.date || ''}" />
             </label>
   
             <label>
               Time
-              <input type="time" />
+              <input type="time" name="time" value="${data?.time || ''}" />
             </label>
   
             <label>
               Needed Items
-              <input type="text" placeholder="e.g. menstrual products, jackets, socks" />
+              <input type="text" name="items" placeholder="e.g. menstrual products, jackets, socks" value="${data?.items || ''}" />
             </label>
   
             <label>
               Volunteer Spots
-              <input type="number" placeholder="Number of volunteers needed" />
+              <input type="number" name="volunteers" placeholder="Number of volunteers needed" value="${data?.volunteers || ''}" />
             </label>
   
             <label>
               Description
-              <textarea placeholder="Describe the pop-up and its purpose"></textarea>
+              <textarea name="description" placeholder="Describe the pop-up and its purpose">${data?.description || ''}</textarea>
             </label>
   
             <button type="submit" class="btn btn-primary">Create GiveSpot</button>
