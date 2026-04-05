@@ -237,6 +237,15 @@
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
+
+  .edit-create-card {
+    background-color: white;
+    max-width: 400px;
+    margin: 4rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
   
   .vertical-buttons {
     display: flex;
@@ -372,4 +381,46 @@
   
   .volunteer-form {
     max-width: 600px;
+  }
+
+  .success-card {
+    background: #f4fff7;
+    border: 1px solid #cfe8d6;
+    border-radius: 18px;
+    padding: 2rem;
+    display: grid;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .success-card h2 {
+    color: #2d6a4f;
+  }
+
+  .success-card {
+    background: #f4fff7;
+    border: 1px solid #cfe8d6;
+    border-radius: 18px;
+    padding: 2.5rem;
+    display: grid;
+    gap: 1.25rem;
+    text-align: center;
+    justify-items: center;
+  }
+  
+  .success-card h2 {
+    color: #2d6a4f;
+  }
+  
+  .success-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  #volunteer-form-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
   }
