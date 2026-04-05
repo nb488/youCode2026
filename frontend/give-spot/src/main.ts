@@ -14,6 +14,7 @@ import type { CreateFormData } from './types'
 import { renderLoginSignupPage } from './pages/login_signup'
 import { renderLoginPage } from './pages/login'
 import { renderSignupPage } from './pages/signup'
+import { renderEditCreatePage } from './pages/edit_create'
 
 let isLoggedIn = false;
 let createFormData: CreateFormData | null = null;
@@ -58,23 +59,29 @@ function renderPage() {
       handleSignupForm()
       break
 
-    case '#create':
-    if (!isLoggedIn) {
+    case '#edit-create': 
+      if (!isEditing) createFormData = null;
+      app.innerHTML = renderEditCreatePage();
+      break
+
+    case '#login-signup':
       app.innerHTML = renderLoginSignupPage();
 
       const loginBtn = document.querySelector<HTMLAnchorElement>('.btn-primary');
       const signupBtn = document.querySelector<HTMLAnchorElement>('.btn-secondary');
 
       loginBtn?.addEventListener('click', () => {
-      isLoggedIn = true;
-      window.location.hash = '#create'; 
+        window.location.hash = '#login';
       });
 
       signupBtn?.addEventListener('click', () => {
-      isLoggedIn = true;
-      window.location.hash = '#create';
+        window.location.hash = '#signup';
       });
+      break;
 
+    case '#create':
+    if (!isLoggedIn) {
+      window.location.hash = '#login-signup';
       return;
     }
       if (!isEditing) createFormData = null;
@@ -124,7 +131,8 @@ function handleLoginForm() {
   
       console.log('Login attempt:', { email, password })
   
-      window.location.hash = '#create'
+      isLoggedIn = true
+      window.location.hash = '#edit-create'
     })
 }
 
