@@ -1,10 +1,67 @@
 import { mockPopups } from '../data/mockPopups'
 import { renderPopupCard } from '../components/popupCard'
+import { initializeMap } from '../components/mapView'
+
+
+function renderPopupList(popups: typeof mockPopups): void {
+    const listPanel = document.querySelector<HTMLDivElement>('.list-panel')
+    if (!listPanel) return
+  
+    if (popups.length === 0) {
+      listPanel.innerHTML = `
+        <div class="empty-state">
+          <h3>No GiveSpots found</h3>
+          <p>Try changing your city search or resource filter.</p>
+        </div>
+      `
+      return
+    }
+  
+    listPanel.innerHTML = popups.map(renderPopupCard).join('')
+  }
+  
+  function getFilteredPopups() {
+    const cityInput = document.getElementById('city-search') as HTMLInputElement | null
+    const resourceFilter = document.getElementById('item-filter') as HTMLSelectElement | null
+  
+    const cityValue = cityInput?.value.trim().toLowerCase() || ''
+    const resourceValue = resourceFilter?.value || 'all'
+  
+    return mockPopups.filter((popup) => {
+      const matchesCity =
+        cityValue === '' || popup.city.toLowerCase().includes(cityValue)
+  
+      const matchesResource =
+        resourceValue === 'all' ||
+        popup.resources.some(
+          (resource) => resource.type.toLowerCase() === resourceValue.toLowerCase()
+        )
+  
+      return matchesCity && matchesResource
+    })
+  }
+  
+  export function attachFindPageEvents(): void {
+    const cityInput = document.getElementById('city-search') as HTMLInputElement | null
+    const resourceFilter = document.getElementById('item-filter') as HTMLSelectElement | null
+  
+    function applyFilters() {
+      const filteredPopups = getFilteredPopups()
+      console.log('filters running')
+      console.log(filteredPopups)
+      renderPopupList(filteredPopups)
+      initializeMap(filteredPopups)
+    }
+  
+    cityInput?.addEventListener('input', applyFilters)
+    resourceFilter?.addEventListener('change', applyFilters)
+  }
+  
 
 export function renderFindPage(): string {
   return `
     <div class="page">
-      <div class="content-container">
+      <div class="content-container find-layout">
         <nav class="topbar">
           <a href="#home" class="nav-logo">GiveSpot</a>
           <div class="nav-links">
@@ -15,21 +72,31 @@ export function renderFindPage(): string {
 
         <section class="page-header">
           <h1>Find GiveSpot</h1>
-          <p>Browse nearby donation pop-ups and find what’s needed.</p>
+          <p>Browse nearby donation pop-ups around Vancouver.</p>
         </section>
 
         <section class="filter-bar">
-          <input type="text" placeholder="Search by item or neighborhood" class="search-input" />
-          <select class="filter-select">
-            <option>All Items</option>
-            <option>Clothing</option>
-            <option>Hygiene Products</option>
-            <option>Food</option>
+          <input
+            id="city-search"
+            type="text"
+            placeholder="Search by city"
+            class="search-input"
+          />
+
+          <select id="item-filter" class="filter-select">
+            <option value="all">All Items</option>
+            <option value="Food">Food</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Medical Supplies">Medical Supplies</option>
           </select>
         </section>
 
-        <section class="popup-list">
-          ${mockPopups.map(renderPopupCard).join('')}
+        <section class="find-content">
+          <div id="map" class="map-panel"></div>
+
+          <div class="list-panel">
+            ${mockPopups.map(renderPopupCard).join('')}
+          </div>
         </section>
       </div>
     </div>
