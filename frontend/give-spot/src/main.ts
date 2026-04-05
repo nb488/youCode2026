@@ -1,6 +1,7 @@
 import './style.css'
 import 'leaflet/dist/leaflet.css'
 
+
 import { renderHomePage } from './pages/home'
 import { renderFindPage, attachFindPageEvents } from './pages/find'
 import { renderCreatePage } from './pages/create'
@@ -16,16 +17,17 @@ import { renderLoginPage , attachLoginPageEvents } from './pages/login'
 import { renderSignupPage } from './pages/signup'
 import { renderEditCreatePage } from './pages/edit_create'
 import { renderNoStoredGiveSpotPage } from './pages/no_stored_givespot'
+import { createPopup } from './services/api'
 
-let isLoggedIn = false;
+let isLoggedIn = false
 let createFormData: CreateFormData | null = null;
 let isEditing = false;
 
 function renderPage() {
 
-  const app = document.querySelector<HTMLDivElement>('#app')
-
-  if (!app) return
+    isLoggedIn = !!localStorage.getItem('loggedInOrganizer')
+    const app = document.querySelector<HTMLDivElement>('#app')
+    if (!app) return
 
   const hash = window.location.hash || '#home'
 
@@ -93,25 +95,91 @@ function renderPage() {
       app.innerHTML = renderCreatePage(createFormData ?? undefined);
       handleCreateForm();
       break
-
-    case '#review':
-      if (!createFormData) {
-        window.location.hash = '#create'
-        return
-      }
-      app.innerHTML = renderReviewPage(createFormData)
-
-      const editBtn = document.querySelector<HTMLAnchorElement>('#edit-btn')
-      editBtn?.addEventListener('click', () => {
-        isEditing = true
-        window.location.hash = '#create'
-      })
-
-      const confirmBtn = document.querySelector<HTMLAnchorElement>('#confirm-btn')
-      confirmBtn?.addEventListener('click', () => {
-      window.location.hash = '#confirmation'
-      })
-      break
+      
+      case '#review':
+        if (!createFormData) {
+          window.location.hash = '#create'
+          return
+        }
+      
+        app.innerHTML = renderReviewPage(createFormData)
+      
+        const editBtn = document.querySelector<HTMLAnchorElement>('#edit-btn')
+        editBtn?.addEventListener('click', () => {
+          isEditing = true
+          window.location.hash = '#create'
+        })
+      
+        const confirmBtn = document.querySelector<HTMLAnchorElement>('#confirm-btn')
+        confirmBtn?.addEventListener('click', async () => {
+          if (!createFormData) return
+      
+          const storedOrganizer = localStorage.getItem('loggedInOrganizer')
+          if (!storedOrganizer) {
+            alert('You must be logged in to create a GiveSpot.')
+            window.location.hash = '#login'
+            return
+          }
+      
+          const organizer = JSON.parse(storedOrganizer)
+      
+          const [street_address, city = '', province = '', postal_code = ''] =
+            createFormData.location.split(',').map((part) => part.trim())
+      
+          const resources = createFormData.items
+            .split(',')
+            .map((item) => item.trim())
+            .filter((item) => item.length > 0)
+            .map((item) => {
+              const lower = item.toLowerCase()
+      
+              let type = 'Other'
+              if (lower.includes('food') || lower.includes('rice') || lower.includes('canned')) {
+                type = 'Food'
+              } else if (
+                lower.includes('jacket') ||
+                lower.includes('blanket') ||
+                lower.includes('sock') ||
+                lower.includes('clothing')
+              ) {
+                type = 'Clothing'
+              } else if (
+                lower.includes('first aid') ||
+                lower.includes('medical') ||
+                lower.includes('bandage')
+              ) {
+                type = 'Medical Supplies'
+              }
+      
+              return { name: item, type }
+            })
+      
+          const payload = {
+            name: createFormData.organizer,
+            description: createFormData.description,
+            street_address: street_address || createFormData.location,
+            city: city || 'Vancouver',
+            province: province || 'British Columbia',
+            postal_code: postal_code || 'V5K0A1',
+            time_start: `${createFormData.date}T${createFormData.time}:00`,
+            time_end: `${createFormData.date}T${createFormData.time}:00`,
+            volunteers_needed: Number(createFormData.volunteers) || 0,
+            organizer_id: organizer.organizer_id,
+            resources,
+          }
+      
+          try {
+            await createPopup(payload)
+            isEditing = false
+            createFormData = null
+            window.location.hash = '#confirmation'
+          } catch (error) {
+            const message =
+              error instanceof Error ? error.message : 'Failed to create GiveSpot'
+            alert(message)
+          }
+        })
+        break
 
     case '#confirmation':
       app.innerHTML = renderConfirmationPage()

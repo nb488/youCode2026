@@ -26,3 +26,36 @@ export async function loginOrganizer(email: string, password: string): Promise<O
 
   return data
 }
+
+
+export interface CreatePopupPayload {
+  name: string
+  description: string
+  street_address: string
+  city: string
+  province: string
+  postal_code: string
+  time_start: string
+  time_end: string
+  volunteers_needed: number
+  organizer_id: number
+  resources: { name: string; type: string }[]
+}
+
+export async function createPopup(payload: CreatePopupPayload) {
+  const response = await fetch(`${BASE_URL}/popups`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to create popup')
+  }
+
+  return data
+}

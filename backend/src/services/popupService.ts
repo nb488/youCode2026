@@ -33,7 +33,6 @@ interface CreatePopUpData {
 export async function createPopUpService(data: CreatePopUpData) {
     const organizer = await getOrganizer(data.organizer_id);
     if (!organizer) throw new Error('Organizer not found');
-    if (organizer.popup_id) throw new Error('You already have a popup. Please delete it before creating a new one');
 
     const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
     // const coordinates = { latitude: 49.282729, longitude: -123.120738 };
@@ -45,7 +44,6 @@ export async function createPopUpService(data: CreatePopUpData) {
         longitude: coordinates.longitude
     });
 
-    await updateOrganizerPopupId(data.organizer_id, popup.popup_id); 
 
     let addedResources = [];
     for (const resource of resources) {
