@@ -8,6 +8,7 @@ interface PopupQuery {
 
 interface PopupData {
     description: string;
+    name: string;
     street_address: string;
     city: string;
     province: string;
@@ -33,7 +34,7 @@ async function getPopUpResourceAndVolunteers(id: number) {
     };
 }
 
-export const findAllPopUps = async (query: PopupQuery = {}) => {
+export const findAllPopUps = async (query: PopupQuery) => {
     const { city, resource_type } = query;
 
     let popupQuery = `
