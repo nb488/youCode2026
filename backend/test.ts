@@ -51,7 +51,7 @@ async function testCreateOrganizer() {
     // ✅ success
     const { status, data } = await request('POST', '/organizers', {
         name: 'Evelyn Thompson',
-        email: 'evelyn2@example.com',
+        email: 'evelyn@example.com',
         phone_number: '555-7890',
         password: 'password123',
     });

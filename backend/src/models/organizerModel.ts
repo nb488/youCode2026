@@ -4,10 +4,11 @@ import { Organizer } from '../types/userType';
 
 export const createOrganizer = async (data: Organizer) => {
   const result = await pool.query(
-    `INSERT INTO Organizer (name, email, phone_number, password)
-     VALUES ($1, $2, $3, $4)
+    `INSERT INTO Organizer (organizer_id, name, email, phone_number, password)
+     VALUES ($1, $2, $3, $4, $5)
      RETURNING *`,
     [
+      data.organizer_id,
       data.name,
       data.email,
       data.phone_number,
