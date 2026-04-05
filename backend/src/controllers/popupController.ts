@@ -3,8 +3,10 @@ import { findPopUpByIdService, findPopUpsService, createPopUpService, updatePopU
 
 export const createPopUp = async (req: Request, res: Response) => {
     try {
+        console.log('req.body:', req.body); // ← add this
+        validatePopUpData(req.body);
         const result = await createPopUpService(req.body);
-        res.status(201).json(result);
+        res.status(200).json(result);
     } catch (err: any) {
         res.status(400).json({ error: err.message });
     }
@@ -12,6 +14,7 @@ export const createPopUp = async (req: Request, res: Response) => {
 
 export const updatePopUp = async (req: Request, res: Response) => {
     try {
+        validatePopUpData(req.body);
         const popupId = Number(req.params.id);
         const result = await updatePopUpService(popupId, req.body);
         res.status(201).json(result);
@@ -19,6 +22,18 @@ export const updatePopUp = async (req: Request, res: Response) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+function validatePopUpData(data: any) {
+    const requiredFields = ['name', 'postal_code', 'street_address', 'province', 'city', 'time_start', 'time_end', 'description', 'volunteers_needed', 'organizer_id', 'resources'];
+    for (const field of requiredFields) {
+        if (!data[field]) {
+            throw new Error(`Missing required field: ${field}`);
+        }
+    }
+    if (!Array.isArray(data.resources)) {
+        throw new Error("Resources must be an array");
+    }
+}
 
 export const getPopUps = async (req: Request, res: Response) => {
     try {
