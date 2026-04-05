@@ -1,10 +1,13 @@
 import './style.css'
+import 'leaflet/dist/leaflet.css'
 
 import { renderHomePage } from './pages/home'
 import { renderFindPage } from './pages/find'
 import { renderCreatePage } from './pages/create'
 import { renderConfirmationPage } from './pages/confirmation'
 import { renderReviewPage } from './pages/review'
+import { mockPopups } from './data/mockPopups'
+import { initializeMap } from './components/mapView'
 import type { CreateFormData } from './types'
 
 let createFormData: CreateFormData | null = null;
@@ -22,6 +25,7 @@ function renderPage() {
 
     case '#find':
       app.innerHTML = renderFindPage()
+      initializeMap(mockPopups)
       break
 
     case '#create':
