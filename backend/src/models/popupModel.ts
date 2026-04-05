@@ -90,7 +90,7 @@ export const createPopUp = async (data: PopupData) => {
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
          RETURNING *`,
         [data.description, data.street_address, data.city, data.province, data.postal_code,
-         data.latitude, data.longitude, data.time_start, data.time_end, data.organizer_id]
+        data.latitude, data.longitude, data.time_start, data.time_end, data.organizer_id]
     );
     return result.rows[0];
 };
@@ -110,7 +110,7 @@ export const updatePopUp = async (id: number, data: PopupData) => {
          WHERE popup_id = $10
          RETURNING *`,
         [data.description, data.street_address, data.city, data.province, data.postal_code,
-         data.latitude, data.longitude, data.time_start, data.time_end, id]
+        data.latitude, data.longitude, data.time_start, data.time_end, id]
     );
     return result.rows[0];
 };
