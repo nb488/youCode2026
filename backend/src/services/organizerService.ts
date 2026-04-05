@@ -25,7 +25,7 @@ export const loginOrganizer = async (email: string, pass: string) => {
     if (!organizer) { throw new Error("Organizer not found") }
     if (organizer.password !== pass) { throw new Error("Invalid password")}
 
-    return await repo.loginOrganizer(organizer.organizer_id, pass);
+    return await repo.loginOrganizer(email, pass);
 };
 
 
