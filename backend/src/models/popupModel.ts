@@ -22,7 +22,7 @@ interface PopupData {
 }
 
 async function getPopUpResourceAndVolunteers(id: number) {
-    const resources = findResourcesByPopUpId(id);
+    const resources = await findResourcesByPopUpId(id);
     const volunteerResult = await pool.query(
         `SELECT v.volunteer_id, v.name, v.email, v.phone_number FROM Volunteer v
          JOIN PopUpVolunteer pv ON pv.volunteer_id = v.volunteer_id
@@ -86,11 +86,11 @@ export const findPopUpById = async (id: number) => {
 export const createPopUp = async (data: PopupData) => {
     const result = await pool.query(
         `INSERT INTO PopUp 
-            (description, street_address, city, province, postal_code, latitude, longitude, time_start, time_end, organizer_id)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            (name, description, street_address, city, province, postal_code, latitude, longitude, time_start, time_end, volunteers_needed, organizer_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
          RETURNING *`,
-        [data.description, data.street_address, data.city, data.province, data.postal_code,
-        data.latitude, data.longitude, data.time_start, data.time_end, data.organizer_id]
+        [data.name, data.description, data.street_address, data.city, data.province, data.postal_code,
+         data.latitude, data.longitude, data.time_start, data.time_end, data.volunteers_needed, data.organizer_id]
     );
     return result.rows[0];
 };
@@ -98,19 +98,21 @@ export const createPopUp = async (data: PopupData) => {
 export const updatePopUp = async (id: number, data: PopupData) => {
     const result = await pool.query(
         `UPDATE PopUp SET
-            description = $1,
-            street_address = $2,
-            city = $3,
-            province = $4,
-            postal_code = $5,
-            latitude = $6,
-            longitude = $7,
-            time_start = $8,
-            time_end = $9
-         WHERE popup_id = $10
+            name = $1,
+            description = $2,
+            street_address = $3,
+            city = $4,
+            province = $5,
+            postal_code = $6,
+            latitude = $7,
+            longitude = $8,
+            time_start = $9,
+            time_end = $10,
+            volunteers_needed = $11
+         WHERE popup_id = $12
          RETURNING *`,
-        [data.description, data.street_address, data.city, data.province, data.postal_code,
-        data.latitude, data.longitude, data.time_start, data.time_end, id]
+        [data.name, data.description, data.street_address, data.city, data.province, data.postal_code,
+         data.latitude, data.longitude, data.time_start, data.time_end, data.volunteers_needed, id]
     );
     return result.rows[0];
 };

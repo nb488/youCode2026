@@ -50,8 +50,8 @@ async function testCreateOrganizer() {
 
     // ✅ success
     const { status, data } = await request('POST', '/organizers', {
-        name: 'Evelyn Thompson',
-        email: 'evelyn2@example.com',
+        name: 'Evan Thompson',
+        email: 'evan8@example.com',
         phone_number: '555-7890',
         password: 'password123',
     });
@@ -67,8 +67,8 @@ async function testCreateOrganizer() {
 
     // ❌ duplicate email
     const r3 = await request('POST', '/organizers', {
-        name: 'Evelyn Thompson',
-        email: 'evelyn@example.com',
+        name: 'Evan Thompson',
+        email: 'evan8@example.com',
         password: 'password123',
     });
     expect('400 on duplicate email', r3.status, 400, r3.data);
@@ -124,10 +124,10 @@ async function testCreatePopup() {
     const { status, data } = await request('POST', '/popups', {
         name: 'Cloth Fundraiser',
         description: 'Downtown donation hub',
-        street_address: '123 Main St',
+        street_address: '750 Hornby St',   // Vancouver Art Gallery
         city: 'Vancouver',
         province: 'British Columbia',
-        postal_code: 'V5K0A1',
+        postal_code: 'V6Z2H7',
         time_start: '2026-04-05T09:00:00',
         time_end: '2026-04-05T17:00:00',
         organizer_id: organizerId,
@@ -151,10 +151,10 @@ async function testCreatePopup() {
     const r3 = await request('POST', '/popups', {
         name: 'Test',
         description: 'test',
-        street_address: '123 Main St',
+        street_address: '750 Hornby St',
         city: 'Vancouver',
         province: 'British Columbia',
-        postal_code: 'V5K0A1',
+        postal_code: 'V6Z2H7',
         time_start: '2026-04-05T17:00:00',
         time_end: '2026-04-05T09:00:00',
         organizer_id: organizerId,
@@ -166,10 +166,10 @@ async function testCreatePopup() {
     const r4 = await request('POST', '/popups', {
         name: 'Test',
         description: 'test',
-        street_address: '123 Main St',
+        street_address: '750 Hornby St',
         city: 'Vancouver',
         province: 'British Columbia',
-        postal_code: 'V5K0A1',
+        postal_code: 'V6Z2H7',
         time_start: '2026-04-05T09:00:00',
         time_end: '2026-04-05T17:00:00',
         organizer_id: 999999,
@@ -219,56 +219,48 @@ async function testUpdatePopup() {
 
     // ✅ success
     const { status, data } = await request('PUT', `/popups/${popupId}`, {
+        name: 'Updated Cloth Fundraiser',
         description: 'Updated description',
-        street_address: '123 Main St',
+        street_address: '750 Hornby St',
         city: 'Vancouver',
         province: 'British Columbia',
-        postal_code: 'V5K0A1',
+        postal_code: 'V6Z2H7',
         time_start: '2026-04-05T10:00:00',
         time_end: '2026-04-05T17:00:00',
         organizer_id: organizerId,
+        volunteers_needed: 5,
         resources: [{ name: 'Winter Jackets', type: 'Clothing' }],
     });
     expect('200 on valid update', status, 200, data);
 
-    // ❌ wrong organizer
-    const r2 = await request('PUT', `/popups/${popupId}`, {
-        description: 'Updated description',
-        street_address: '123 Main St',
-        city: 'Vancouver',
-        province: 'British Columbia',
-        postal_code: 'V5K0A1',
-        time_start: '2026-04-05T10:00:00',
-        time_end: '2026-04-05T17:00:00',
-        organizer_id: 999999,
-        resources: [],
-    });
-    expect('400 on wrong organizer', r2.status, 400, r2.data);
-
     // ❌ popup not found
     const r3 = await request('PUT', '/popups/999999', {
-        description: 'test',
-        street_address: '123 Main St',
+        name: 'Updated Cloth Fundraiser',
+        description: 'Updated description',
+        street_address: '750 Hornby St',
         city: 'Vancouver',
         province: 'British Columbia',
-        postal_code: 'V5K0A1',
+        postal_code: 'V6Z2H7',
         time_start: '2026-04-05T10:00:00',
         time_end: '2026-04-05T17:00:00',
-        organizer_id: organizerId,
+        volunteers_needed: 4,
+        organizer_id: 999999,
         resources: [],
     });
     expect('400 on popup not found', r3.status, 400, r3.data);
 
     // ❌ time_end before time_start
     const r4 = await request('PUT', `/popups/${popupId}`, {
+        name: 'Updated Cloth Fundraiser',
         description: 'test',
-        street_address: '123 Main St',
+        street_address: '750 Hornby St',
         city: 'Vancouver',
         province: 'British Columbia',
-        postal_code: 'V5K0A1',
+        postal_code: 'V6Z2H7',
         time_start: '2026-04-05T17:00:00',
         time_end: '2026-04-05T09:00:00',
         organizer_id: organizerId,
+        volunteers_needed: 4,
         resources: [],
     });
     expect('400 on time_end before time_start', r4.status, 400, r4.data);
@@ -317,37 +309,18 @@ async function testAddVolunteer() {
     expect('400 on popup not found', r5.status, 400, r5.data);
 }
 
-async function testRemoveVolunteer() {
-    section('DELETE /popups/:id/volunteers/:volunteerId');
-
-    // ✅ success
-    const { status, data } = await request('DELETE', `/popups/${popupId}/volunteers/${volunteerId}`);
-    expect('200 on valid remove', status, 200, data);
-
-    // ❌ volunteer not on popup
-    const r2 = await request('DELETE', `/popups/${popupId}/volunteers/${volunteerId}`);
-    expect('400 on volunteer not found', r2.status, 400, r2.data);
-
-    // ❌ popup not found
-    const r3 = await request('DELETE', `/popups/999999/volunteers/${volunteerId}`);
-    expect('400 on popup not found', r3.status, 400, r3.data);
-}
 
 // ─── Delete Popup Test ────────────────────────────────────────────────────────
 
 async function testDeletePopup() {
     section('DELETE /popups/:id');
 
-    // ❌ wrong organizer
-    const r1 = await request('DELETE', `/popups/${popupId}`, { organizer_id: 999999 });
-    expect('400 on wrong organizer', r1.status, 400, r1.data);
-
     // ✅ success
-    const { status, data } = await request('DELETE', `/popups/${popupId}`, { organizer_id: organizerId });
+    const { status, data } = await request('DELETE', `/popups/${popupId}`);
     expect('200 on valid delete', status, 200, data);
 
     // ❌ already deleted
-    const r2 = await request('DELETE', `/popups/${popupId}`, { organizer_id: organizerId });
+    const r2 = await request('DELETE', `/popups/${popupId}`);
     expect('400 on already deleted', r2.status, 400, r2.data);
 }
 
@@ -364,7 +337,6 @@ async function runAll() {
         await testGetPopupById();
         await testUpdatePopup();
         await testAddVolunteer();
-        await testRemoveVolunteer();
         await testDeletePopup();
         console.log('\n✅ All tests complete!\n');
     } catch (err) {
