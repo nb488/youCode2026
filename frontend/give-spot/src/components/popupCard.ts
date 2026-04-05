@@ -17,7 +17,8 @@ export function renderPopupCard(popup: Popup): string {
       <p><strong>End:</strong> ${end}</p>
       <p><strong>Resources Needed:</strong> ${resources}</p>
       <p><strong>Volunteers Signed Up:</strong> ${popup.volunteer_count}</p>
-      <button class="btn btn-secondary">View Details</button>
+      <button class="btn btn-secondary">View Description</button>
+      <button class="btn btn-primary">I Want to Volunteer</button>
     </div>
   `
 }
