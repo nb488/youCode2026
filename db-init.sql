@@ -13,7 +13,7 @@ CREATE TABLE Organizer (
     email VARCHAR(50) UNIQUE NOT NULL,
     phone_number VARCHAR(20),
     password VARCHAR(255) NOT NULL,
-    center_id INT,
+    center_id INT
 );
 
 -- Volunteers
@@ -21,7 +21,7 @@ CREATE TABLE Volunteer (
     volunteer_id INT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
-    phone_number VARCHAR(20),
+    phone_number VARCHAR(20)
 );
 
 -- Centers / PopUps
@@ -42,7 +42,7 @@ CREATE TABLE PopUp (
 
 -- Many-to-many relationship: PopUps <-> Volunteers
 CREATE TABLE PopUpVolunteer (
-    popup_id INT NOT NULL REFERENCES PopUp(popup_id),
+    popup_id INT NOT NULL REFERENCES PopUp(popup_id) ON DELETE CASCADE,
     volunteer_id INT NOT NULL REFERENCES Volunteer(volunteer_id),
     PRIMARY KEY (popup_id, volunteer_id)
 );
@@ -51,7 +51,7 @@ CREATE TABLE PopUpVolunteer (
 -- Note this specifies the resources that the PopUp is collecting 
 CREATE TABLE Resource (
     resource_id SERIAL PRIMARY KEY,
-    popup_id INT NOT NULL REFERENCES PopUp(popup_id),
+    popup_id INT NOT NULL REFERENCES PopUp(popup_id) ON DELETE CASCADE,
     name VARCHAR(50) NOT NULL,
     type VARCHAR(50) NOT NULL
 );
