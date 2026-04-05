@@ -4,6 +4,8 @@ import 'leaflet/dist/leaflet.css'
 import { renderHomePage } from './pages/home'
 import { renderFindPage, attachFindPageEvents } from './pages/find'
 import { renderCreatePage } from './pages/create'
+import { renderDetailsPage } from './pages/details'
+import { renderVolunteerPage } from './pages/volunteer'
 import { renderConfirmationPage } from './pages/confirmation'
 import { renderReviewPage } from './pages/review'
 import { mockPopups } from './data/mockPopups'
@@ -20,6 +22,18 @@ function renderPage() {
   if (!app) return
 
   const hash = window.location.hash || '#home'
+
+  if (hash.startsWith('#details-')) {
+    const centerId = Number(hash.replace('#details-', ''))
+    app.innerHTML = renderDetailsPage(centerId)
+    return
+  }
+
+  if (hash.startsWith('#volunteer-')) {
+    const centerId = Number(hash.replace('#volunteer-', ''))
+    app.innerHTML = renderVolunteerPage(centerId)
+    return
+  }
 
   switch (hash) {
 
