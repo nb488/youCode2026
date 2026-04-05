@@ -120,3 +120,34 @@ export const deletePopUp = async (id: number) => {
     return result.rowCount;
 };
 
+interface Volunteer {
+    name: string,
+    email: string,
+    phone_number: string | undefined
+}
+
+export const addVolunteerToPopUp = async (popup_id: number, volunteer: Volunteer) => {
+    // check if volunteer already exists based on email
+    const { name, email, phone_number } = volunteer;
+    let volunteerResult = await pool.query('SELECT * FROM Volunteer WHERE email = $1', [volunteer.email]);
+    if (volunteerResult.rows.length === 0) {
+        // create new volunteer
+        volunteerResult = await pool.query(
+            'INSERT INTO Volunteer (name, email, phone_number) VALUES ($1, $2, $3) RETURNING *',
+            [name, email, phone_number]
+        );    
+    }
+
+    try {
+        const result = await pool.query(
+          'INSERT INTO PopUpVolunteer (popup_id, volunteer_id) VALUES ($1, $2)',
+          [popup_id, volunteerResult.rows[0].volunteer_id]
+        );
+        return result;
+      } catch (err: any) {
+        if (err.code === '23505') { // unique violation
+          return null; // volunteer already signed up for this pop-up, ignore the error
+        }
+        throw err; 
+      }
+}

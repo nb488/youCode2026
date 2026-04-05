@@ -1,4 +1,4 @@
-import { findAllPopUps, findPopUpById, createPopUp, updatePopUp, deletePopUp } from "../models/popupModel";
+import { findAllPopUps, findPopUpById, createPopUp, updatePopUp, deletePopUp, addVolunteerToPopUp } from "../models/popupModel";
 import { getCoordinates } from "../utils/geolocation";
 import { addResourceToPopUp, deleteResourcesByPopUpId } from "../models/resourceModel";
 
@@ -65,4 +65,9 @@ export async function deletePopUpService(id: number) {
     await deleteResourcesByPopUpId(id);
     const result = await deletePopUp(id);
     if (result === 0) throw new Error('Pop-up not found');
+}
+
+export async function addVolunteerToPopUpService(id: number, volunteerData: { name: string; email: string; phone_number: string }) {
+    const result = await addVolunteerToPopUp(id, volunteerData);
+    if (result === null) throw new Error('Volunteer already exists for this pop-up');
 }
