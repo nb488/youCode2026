@@ -44,6 +44,7 @@ function renderPage() {
     case '#find':
       app.innerHTML = renderFindPage()
       initializeMap(mockPopups)
+      attachFindPageEvents()
       break
 
     case '#login':
@@ -55,21 +56,6 @@ function renderPage() {
       app.innerHTML = renderSignupPage()
       handleSignupForm()
       break
-
-    case '#login-signup':
-      app.innerHTML = renderLoginSignupPage();
-
-      const loginBtn = document.querySelector<HTMLAnchorElement>('.btn-primary');
-      const signupBtn = document.querySelector<HTMLAnchorElement>('.btn-secondary');
-
-      loginBtn?.addEventListener('click', () => {
-        window.location.hash = '#login';
-      });
-
-      signupBtn?.addEventListener('click', () => {
-        window.location.hash = '#signup';
-      });
-      break;
 
     case '#create':
     if (!isLoggedIn) {
