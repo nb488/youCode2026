@@ -51,7 +51,7 @@ async function testCreateOrganizer() {
     // ✅ success
     const { status, data } = await request('POST', '/organizers', {
         name: 'Evan Thompson',
-        email: 'evan8@example.com',
+        email: 'evan9@example.com',
         phone_number: '555-7890',
         password: 'password123',
     });
@@ -68,7 +68,7 @@ async function testCreateOrganizer() {
     // ❌ duplicate email
     const r3 = await request('POST', '/organizers', {
         name: 'Evan Thompson',
-        email: 'evan8@example.com',
+        email: 'evan9@example.com',
         password: 'password123',
     });
     expect('400 on duplicate email', r3.status, 400, r3.data);
@@ -324,6 +324,18 @@ async function testDeletePopup() {
     expect('400 on already deleted', r2.status, 400, r2.data);
 }
 
+async function testGetPopupsByOrganizer() {
+    section('GET /organizers/:id/popups');
+
+    // ✅ success
+    const { status, data } = await request('GET', `/organizers/${organizerId}/popups`);
+    expect('200 on valid get', status, 200, data);
+
+    // ❌ organizer not found
+    const r2 = await request('GET', '/organizers/999999/popups');
+    expect('400 on not found', r2.status, 400, r2.data);
+}
+
 // ─── Run All Tests ────────────────────────────────────────────────────────────
 
 async function runAll() {
@@ -335,6 +347,7 @@ async function runAll() {
         await testCreatePopup();
         await testGetAllPopups();
         await testGetPopupById();
+        await testGetPopupsByOrganizer(); 
         await testUpdatePopup();
         await testAddVolunteer();
         await testDeletePopup();

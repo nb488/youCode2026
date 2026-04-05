@@ -1,6 +1,7 @@
 import { findAllPopUps, findPopUpById, createPopUp, updatePopUp, deletePopUp, addVolunteerToPopUp } from "../models/popupModel";
 import { getCoordinates } from "../utils/geolocation";
 import { addResourceToPopUp, deleteResourcesByPopUpId } from "../models/resourceModel";
+import { updateOrganizerPopupId, deleteOrganizerPopupId, getOrganizer } from '../models/organizerModel';
 
 export async function findPopUpsService(city?: string, resource_type?: string) {
     const query: { city?: string; resource_type?: string } = {};
@@ -30,6 +31,10 @@ interface CreatePopUpData {
 }
 
 export async function createPopUpService(data: CreatePopUpData) {
+    const organizer = await getOrganizer(data.organizer_id);
+    if (!organizer) throw new Error('Organizer not found');
+    if (organizer.popup_id) throw new Error('You already have a popup. Please delete it before creating a new one');
+
     const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
     // const coordinates = { latitude: 49.282729, longitude: -123.120738 };
 
@@ -39,6 +44,9 @@ export async function createPopUpService(data: CreatePopUpData) {
         latitude: coordinates.latitude,
         longitude: coordinates.longitude
     });
+
+    await updateOrganizerPopupId(data.organizer_id, popup.popup_id); 
+
     let addedResources = [];
     for (const resource of resources) {
         const addedResource = await addResourceToPopUp(popup.popup_id, resource.name, resource.type);
@@ -78,10 +86,10 @@ export async function updatePopUpService(id: number, data: CreatePopUpData) {
 }
 
 export async function deletePopUpService(id: number) {
-    // delete resources first due to foreign key constraint
-    await deleteResourcesByPopUpId(id);
-    const result = await deletePopUp(id);
-    if (result === 0) throw new Error('Pop-up not found');
+    const popup = await findPopUpById(id);
+    if (!popup) throw new Error('Pop-up not found');
+    await deleteOrganizerPopupId(id);
+    await deletePopUp(id);
 }
 
 export async function addVolunteerToPopUpService(id: number, volunteerData: { name: string; email: string; phone_number: string }) {
