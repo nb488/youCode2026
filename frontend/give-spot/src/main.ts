@@ -2,7 +2,7 @@ import './style.css'
 import 'leaflet/dist/leaflet.css'
 
 import { renderHomePage } from './pages/home'
-import { renderFindPage } from './pages/find'
+import { renderFindPage, attachFindPageEvents } from './pages/find'
 import { renderCreatePage } from './pages/create'
 import { renderConfirmationPage } from './pages/confirmation'
 import { renderReviewPage } from './pages/review'
@@ -26,13 +26,12 @@ function renderPage() {
     case '#find':
       app.innerHTML = renderFindPage()
       initializeMap(mockPopups)
+      attachFindPageEvents()
       break
 
     case '#create':
-      if (!isEditing) createFormData = null;
-      app.innerHTML = renderCreatePage(createFormData ?? undefined);
-      handleCreateForm();
-      break
+        app.innerHTML = renderCreatePage()
+        break
 
     case '#review':
       if (!createFormData) {

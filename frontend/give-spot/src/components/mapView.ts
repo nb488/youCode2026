@@ -24,8 +24,8 @@ export function initializeMap(popups: Popup[]) {
     }).addTo(map!)
 
     marker.bindPopup(`
-      <strong>${popup.description}</strong><br/>
-      ${popup.street_address}, ${popup.city}<br/>
+      <strong>${popup.description}</strong><br />
+      ${popup.street_address}, ${popup.city}<br />
       Volunteers: ${popup.volunteer_count}
     `)
 
