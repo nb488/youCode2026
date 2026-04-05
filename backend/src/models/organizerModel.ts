@@ -41,6 +41,20 @@ export const getOrganizerByEmail = async (email: string) => {
   return result.rows[0];
 };
 
+export const updateOrganizerPopupId = async (organizer_id: number, popup_id: number) => {
+    await pool.query(
+        'UPDATE Organizer SET popup_id = $1 WHERE organizer_id = $2',
+        [popup_id, organizer_id]
+    );
+};
+
+export const deleteOrganizerPopupId = async (popup_id: number) => {
+    await pool.query(
+        'UPDATE Organizer SET popup_id = NULL WHERE popup_id = $1',
+        [popup_id]
+    );
+}
+
 
 
 
