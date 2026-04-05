@@ -7,8 +7,8 @@ export function renderReviewPage(data: CreateFormData): string {
           <nav class="topbar">
             <a href="#home" class="nav-logo">GiveSpot</a>
             <div class="nav-links">
-              <a href="#find">Find</a>
-              <a href="#create">Create</a>
+              <a href="#find" class="nav-logo">Find</a>
+              <a href="#create" class="nav-logo">Create</a>
             </div>
           </nav>
   
