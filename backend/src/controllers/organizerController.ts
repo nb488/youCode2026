@@ -1,6 +1,25 @@
 import { Request, Response } from "express";
 import { Organizer } from '../types/userType';
 import * as service from "../services/organizerService";
+import { findPopUpById } from "../models/popupModel";
+
+
+export const getPopUpsByOrganizer = async (req: Request, res: Response) => {
+  try {
+    const organizerId = Number(req.params.id);
+    const organizer = await service.getOrganizer(organizerId);
+    if (!organizer) {
+      return res.status(400).json({ error: "Organizer not found" });
+    }
+    const popUp = await findPopUpById(organizer.popup_id);
+    if (!popUp) {
+      return res.status(400).json({ error: "No pop-ups found for this organizer" });
+    }
+    res.status(200).json(popUp);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message });
+  };
+};
 
 export const createOrganizer = async (req: Request, res: Response) => {
   try {
