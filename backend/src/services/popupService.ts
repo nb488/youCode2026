@@ -30,9 +30,8 @@ interface CreatePopUpData {
 }
 
 export async function createPopUpService(data: CreatePopUpData) {
-    // const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
-    // TODO: replace with real geocoding later
-    const coordinates = { latitude: 49.282729, longitude: -123.120738 };
+    const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
+    // const coordinates = { latitude: 49.282729, longitude: -123.120738 };
 
     const { resources, ...popupData } = data;
     const popup = await createPopUp({
@@ -56,9 +55,8 @@ export async function updatePopUpService(id: number, data: CreatePopUpData) {
     const popup = await findPopUpById(id);
     if (!popup) throw new Error('Popup not found'); 
 
-    // const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
-     // TODO: replace with real geocoding later
-     const coordinates = { latitude: 49.282729, longitude: -123.120738 };
+    const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
+    //  const coordinates = { latitude: 49.282729, longitude: -123.120738 };
 
     const { resources, ...popupData } = data;
     const updatePopUpResult = await updatePopUp(id, {
