@@ -5,7 +5,7 @@
   }
   
   body {
-    font-family: "Palatino Linotype", Palatino, serif;
+    font-family: Arial, Helvetica, sans-serif;
     background: linear-gradient(135deg, #fdf6f0, #fffaf7);
     color: #2d2d2d;
     min-height: 100vh;
@@ -47,7 +47,7 @@
   
   .tagline {
     font-size: 1.2rem;
-    color: #5c6474;
+    color: #8798be;
     max-width: 600px;
     margin: 0 auto 2rem auto;
     line-height: 1.6;
@@ -91,7 +91,7 @@
   .subtext {
     margin-top: 1.5rem;
     font-size: 0.95rem;
-    color: #777;
+    color: #8798be;
   }
   
   @media (max-width: 600px) {
@@ -219,7 +219,7 @@
   }
 
   input, select, textarea, button {
-    font-family: "Palatino Linotype", Palatino, serif;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   .find-content {
