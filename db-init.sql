@@ -13,7 +13,7 @@ CREATE TABLE Organizer (
     email VARCHAR(50) UNIQUE NOT NULL,
     phone_number VARCHAR(20),
     password VARCHAR(255) NOT NULL,
-    center_id INT,
+    center_id INT
 );
 
 -- Volunteers
@@ -21,7 +21,7 @@ CREATE TABLE Volunteer (
     volunteer_id INT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
-    phone_number VARCHAR(20),
+    phone_number VARCHAR(20)
 );
 
 -- Centers / PopUps
