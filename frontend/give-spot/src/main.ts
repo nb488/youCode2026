@@ -12,7 +12,7 @@ import { mockPopups } from './data/mockPopups'
 import { initializeMap } from './components/mapView'
 import type { CreateFormData } from './types'
 import { renderLoginSignupPage } from './pages/login_signup'
-import { renderLoginPage } from './pages/login'
+import { renderLoginPage , attachLoginPageEvents } from './pages/login'
 import { renderSignupPage } from './pages/signup'
 import { renderEditCreatePage } from './pages/edit_create'
 import { renderNoStoredGiveSpotPage } from './pages/no_stored_givespot'
@@ -52,7 +52,7 @@ function renderPage() {
 
     case '#login':
       app.innerHTML = renderLoginPage()
-      handleLoginForm()
+      attachLoginPageEvents()
       break
 
     case '#signup':
@@ -122,23 +122,6 @@ function renderPage() {
       app.innerHTML = renderHomePage()
       break
   }
-}
-
-function handleLoginForm() {
-    const form = document.querySelector<HTMLFormElement>('.login-form')
-    if (!form) return
-  
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      const formData = new FormData(form)
-      const email = formData.get('email') as string
-      const password = formData.get('password') as string
-  
-      console.log('Login attempt:', { email, password })
-  
-      isLoggedIn = true
-      window.location.hash = '#edit-create'
-    })
 }
 
 function handleSignupForm() {
