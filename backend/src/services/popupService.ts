@@ -32,6 +32,7 @@ interface CreatePopUpData {
 
 export async function createPopUpService(data: CreatePopUpData) {
     const organizer = await getOrganizer(data.organizer_id);
+    console.log('organizer:', organizer);
     if (!organizer) throw new Error('Organizer not found');
 
     const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);

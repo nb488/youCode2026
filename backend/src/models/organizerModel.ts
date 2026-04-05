@@ -3,18 +3,25 @@ import { Organizer } from '../types/userType';
 
 
 export const createOrganizer = async (data: Organizer) => {
-  const result = await pool.query(
-    `INSERT INTO Organizer (name, email, phone_number, password)
-     VALUES ($1, $2, $3, $4)
-     RETURNING *`,
-    [
-      data.name,
-      data.email,
-      data.phone_number,
-      data.password,
-    ]
-  );
-  return result.rows[0];
+    try {
+        const result = await pool.query(
+            `INSERT INTO Organizer (name, email, phone_number, password)
+             VALUES ($1, $2, $3, $4)
+             RETURNING *`,
+            [
+              data.name,
+              data.email,
+              data.phone_number,
+              data.password,
+            ]
+          );
+          return result.rows[0];
+    } catch (err) {
+        if ((err as any).code === '23505') { // unique_violation
+            throw new Error('Organizer already exists');
+          }
+          throw err;
+    }
 };
 
 export const getOrganizer = async (organizer_id: number) => {
@@ -38,6 +45,7 @@ export const getOrganizerByEmail = async (email: string) => {
     `SELECT * FROM Organizer WHERE email = $1`,
     [email]
   );
+  console.log(result);
   return result.rows[0];
 };
 

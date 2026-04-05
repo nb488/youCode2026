@@ -3,7 +3,7 @@ import { findPopUpByIdService, findPopUpsService, createPopUpService, updatePopU
 
 export const createPopUp = async (req: Request, res: Response) => {
     try {
-        // console.log('req.body:', req.body); // ← add this
+        console.log('req.body:', req.body); // ← add this
         validatePopUpData(req.body);
         const result = await createPopUpService(req.body);
         res.status(201).json(result);
