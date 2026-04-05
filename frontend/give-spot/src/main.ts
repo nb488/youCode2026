@@ -56,6 +56,21 @@ function renderPage() {
       handleSignupForm()
       break
 
+    case '#login-signup':
+      app.innerHTML = renderLoginSignupPage();
+
+      const loginBtn = document.querySelector<HTMLAnchorElement>('.btn-primary');
+      const signupBtn = document.querySelector<HTMLAnchorElement>('.btn-secondary');
+
+      loginBtn?.addEventListener('click', () => {
+        window.location.hash = '#login';
+      });
+
+      signupBtn?.addEventListener('click', () => {
+        window.location.hash = '#signup';
+      });
+      break;
+
     case '#create':
     if (!isLoggedIn) {
       app.innerHTML = renderLoginSignupPage();
