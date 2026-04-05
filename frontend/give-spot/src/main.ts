@@ -5,7 +5,7 @@ import { renderHomePage } from './pages/home'
 import { renderFindPage, attachFindPageEvents } from './pages/find'
 import { renderCreatePage } from './pages/create'
 import { renderDetailsPage } from './pages/details'
-import { renderVolunteerPage } from './pages/volunteer'
+import { renderVolunteerPage, attachVolunteerPageEvents } from './pages/volunteer'
 import { renderConfirmationPage } from './pages/confirmation'
 import { renderReviewPage } from './pages/review'
 import { mockPopups } from './data/mockPopups'
@@ -36,6 +36,7 @@ function renderPage() {
   if (hash.startsWith('#volunteer-')) {
     const centerId = Number(hash.replace('#volunteer-', ''))
     app.innerHTML = renderVolunteerPage(centerId)
+    attachVolunteerPageEvents(centerId)
     return
   }
 
