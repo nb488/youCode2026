@@ -8,6 +8,6 @@ router.post("/:id", controller.updatePopUp);
 router.get("/", controller.getPopUps);
 router.get("/:id", controller.getPopUp);
 router.delete("/:id", controller.deletePopUp);
-// router.post("/:id/volunteers/:volunteerId", controller.addVolunteerToPopUp);
+router.post("/:id/volunteers/:volunteerId", controller.addVolunteer);
 
 export default router;

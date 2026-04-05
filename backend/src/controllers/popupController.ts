@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findPopUpByIdService, findPopUpsService, createPopUpService, updatePopUpService, deletePopUpService } from "../services/popupService";
+import { findPopUpByIdService, findPopUpsService, createPopUpService, updatePopUpService, deletePopUpService, addVolunteerToPopUpService } from "../services/popupService";
 
 export const createPopUp = async (req: Request, res: Response) => {
     try {
@@ -51,3 +51,13 @@ export const deletePopUp = async (req: Request, res: Response) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+export const addVolunteer = async (req: Request, res: Response) => {    
+    try {
+        const popupId = Number(req.params.id);
+        await addVolunteerToPopUpService(popupId, req.body);
+        res.status(200).json({ message: "Volunteer added successfully" });
+    } catch (err: any) {
+        res.status(400).json({ error: err.message });
+    }   
+}
