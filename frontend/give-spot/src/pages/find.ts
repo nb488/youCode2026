@@ -65,13 +65,13 @@ export function renderFindPage(): string {
         <nav class="topbar">
           <a href="#home" class="nav-logo">GiveSpot</a>
           <div class="nav-links">
-            <a href="#find">Find</a>
-            <a href="#create">Create</a>
+            <a href="#find"class="nav-logo">Find</a>
+            <a href="#create"class="nav-logo">Create</a>
           </div>
         </nav>
 
         <section class="page-header">
-          <h1>Find GiveSpot</h1>
+          <h1>Find A GiveSpot</h1>
           <p>Browse nearby donation pop-ups around Vancouver.</p>
         </section>
 
