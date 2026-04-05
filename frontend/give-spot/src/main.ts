@@ -44,6 +44,7 @@ function renderPage() {
     case '#find':
       app.innerHTML = renderFindPage()
       initializeMap(mockPopups)
+      attachFindPageEvents()
       break
 
     case '#login':
