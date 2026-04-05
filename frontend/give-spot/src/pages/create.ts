@@ -35,7 +35,7 @@ export function renderCreatePage(data?: CreateFormData): string {
   
             <label>
               Location
-              <input type="text" name="location" placeholder="Enter address or neighborhood" value="${data?.location || ''}" />
+              <input type="text" name="location" placeholder="e.g. 123 Main St, Vancouver, British Columbia, V5KOA1" value="${data?.location || ''}" />
             </label>
   
             <label>
@@ -55,7 +55,7 @@ export function renderCreatePage(data?: CreateFormData): string {
   
             <label>
               Needed Items
-              <input type="text" name="items" placeholder="e.g. menstrual products, jackets, socks" value="${data?.items || ''}" />
+              <input type="text" name="items" placeholder="e.g. Food, Clothing, Medical Supplies" value="${data?.items || ''}" />
             </label>
   
             <label>
