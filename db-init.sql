@@ -42,7 +42,7 @@ CREATE TABLE PopUp (
 
 -- Now that PopUp exists, add popup_id FK to Organizer
 ALTER TABLE Organizer ADD COLUMN popup_id INT;
-ALTER TABLE Organizer ADD CONSTRAINT fk_popup FOREIGN KEY (popup_id) REFERENCES PopUp(popup_id);
+ALTER TABLE Organizer ADD CONSTRAINT fk_popup FOREIGN KEY (popup_id) REFERENCES PopUp(popup_id) ON DELETE SET NULL;
 
 -- Many-to-many: PopUps <-> Volunteers
 CREATE TABLE PopUpVolunteer (

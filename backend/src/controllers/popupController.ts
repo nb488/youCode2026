@@ -3,10 +3,10 @@ import { findPopUpByIdService, findPopUpsService, createPopUpService, updatePopU
 
 export const createPopUp = async (req: Request, res: Response) => {
     try {
-        console.log('req.body:', req.body); // ← add this
+        // console.log('req.body:', req.body); // ← add this
         validatePopUpData(req.body);
         const result = await createPopUpService(req.body);
-        res.status(200).json(result);
+        res.status(201).json(result);
     } catch (err: any) {
         res.status(400).json({ error: err.message });
     }
@@ -17,16 +17,18 @@ export const updatePopUp = async (req: Request, res: Response) => {
         validatePopUpData(req.body);
         const popupId = Number(req.params.id);
         const result = await updatePopUpService(popupId, req.body);
-        res.status(201).json(result);
+        res.status(200).json(result);
     } catch (err: any) {
         res.status(400).json({ error: err.message });
     }
 };
 
 function validatePopUpData(data: any) {
-    const requiredFields = ['name', 'postal_code', 'street_address', 'province', 'city', 'time_start', 'time_end', 'description', 'volunteers_needed', 'organizer_id', 'resources'];
+    const requiredFields = ['name', 'postal_code', 'street_address', 'province', 'city', 
+                           'time_start', 'time_end', 'description', 'volunteers_needed', 
+                           'organizer_id', 'resources'];
     for (const field of requiredFields) {
-        if (!data[field]) {
+        if (data[field] === undefined || data[field] === null || data[field] === '') {
             throw new Error(`Missing required field: ${field}`);
         }
     }
@@ -71,7 +73,7 @@ export const addVolunteer = async (req: Request, res: Response) => {
     try {
         const popupId = Number(req.params.id);
         await addVolunteerToPopUpService(popupId, req.body);
-        res.status(200).json({ message: "Volunteer added successfully" });
+        res.status(201).json({ message: "Volunteer added successfully" });
     } catch (err: any) {
         res.status(400).json({ error: err.message });
     }   

@@ -30,17 +30,36 @@ interface CreatePopUpData {
 }
 
 export async function createPopUpService(data: CreatePopUpData) {
-    const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
+    // const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
+    // TODO: replace with real geocoding later
+    const coordinates = { latitude: 49.282729, longitude: -123.120738 };
+
     const { resources, ...popupData } = data;
-    return await createPopUp({
+    const popup = await createPopUp({
         ...popupData,
         latitude: coordinates.latitude,
         longitude: coordinates.longitude
     });
+    let addedResources = [];
+    for (const resource of resources) {
+        const addedResource = await addResourceToPopUp(popup.popup_id, resource.name, resource.type);
+        addedResources.push(addedResource);
+    }
+    return {
+        ...popup,
+        resources: addedResources
+    }
+
 }
 
 export async function updatePopUpService(id: number, data: CreatePopUpData) {
-    const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
+    const popup = await findPopUpById(id);
+    if (!popup) throw new Error('Popup not found'); 
+
+    // const coordinates = await getCoordinates(data.street_address, data.city, data.province, data.postal_code);
+     // TODO: replace with real geocoding later
+     const coordinates = { latitude: 49.282729, longitude: -123.120738 };
+
     const { resources, ...popupData } = data;
     const updatePopUpResult = await updatePopUp(id, {
         ...popupData,

@@ -4,10 +4,10 @@ import * as controller from "../controllers/popupController";
 const router = express.Router();
 
 router.post("/", controller.createPopUp);
-router.post("/:id", controller.updatePopUp);
+router.put("/:id", controller.updatePopUp);
 router.get("/", controller.getPopUps);
 router.get("/:id", controller.getPopUp);
 router.delete("/:id", controller.deletePopUp);
-router.post("/:id/volunteers/:volunteerId", controller.addVolunteer);
+router.post("/:id/volunteers", controller.addVolunteer);
 
 export default router;
