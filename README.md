@@ -1,5 +1,6 @@
 # Give-Spot
-**youCode 2026 Hackathon Project** — *Strengthening BC's Nonprofit Workforce, Powered by Community*
+**youCode 2026 Hackathon Project** — *Strengthening BC's Nonprofit Workforce, Powered by Community* <br>
+<a href="https://devpost.com/software/givespot">Link to Devpost</a>
 
 ---
 
